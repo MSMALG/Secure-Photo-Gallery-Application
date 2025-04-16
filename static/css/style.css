@@ -23,3 +23,23 @@ body {
     margin-bottom: 20px;
     text-align: center;
 }
+
+/* Custom modal styling */
+#deleteModal .modal-content {
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  }
+  
+  #deleteModal .modal-header {
+    border-bottom: none;
+    padding: 1.5rem;
+  }
+  
+  #deleteModal .modal-footer {
+    border-top: none;
+    padding: 1.5rem;
+  }
+  
+  #deleteModal .btn-danger {
+    padding: 8px 25px;
+  }
