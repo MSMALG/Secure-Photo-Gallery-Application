@@ -9,6 +9,12 @@ cryptography = "*"
 flask-sqlalchemy = "*"
 flask-login = "*"
 flask-bcrypt = "*"
+flask-wtf = "*"
+flask-mail = "*"
+mailjet-rest = "*"
+pycryptodome = "*"
+flask-migrate = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

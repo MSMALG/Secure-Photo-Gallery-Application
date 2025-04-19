@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+<div class="text-center">
+  <h1>Welcome to our Secure Photo Gallery!</h1>
+  <p>Start by logging in or creating a new account.</p>
+  <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+  <a href="{{ url_for('register') }}" class="btn btn-success">Register</a>
+</div>
+{% endblock %}

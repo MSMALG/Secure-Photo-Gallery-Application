@@ -1,45 +1,317 @@
+* Base Styles */
 body {
-    background-color: #be3838;
-    font-family: Arial, sans-serif;
+  background-color: #f9f2fd;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #3c2d48;
+  padding-bottom: 50px;
 }
 
 .container {
-    margin-top: 40px;
+  margin-top: 50px;
+}
+
+/* Header & Title */
+.gallery-header {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #654279;
+  position: relative;
+}
+
+.gallery-header h1 {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.gallery-header:after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: #654279;
+  margin: 10px auto;
+  border-radius: 2px;
+}
+
+/* Upload Form Styling */
+.upload-container {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 40px;
+  transition: transform 0.3s ease;
+}
+
+.upload-container:hover {
+  transform: translateY(-5px);
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #654279;
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* Custom File Input Styling */
+.file-input-wrapper {
+  position: relative;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.file-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.file-input-label {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  background: #dddddd;
+  border: 1.5px dashed #f9f8f9;
+  border-radius: 8px;
+  color: #9f9f9f;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.file-input-label i {
+  margin-right: 10px;
+  font-size: 20px;
+  color: #9f9f9f;
+}
+
+.file-input-label:hover {
+  background: #e2e8f0;
+  border-color: #b5a0c0;
+}
+
+.file-name {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #907196;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 5px;
+}
+
+/* Upload Button */
+.btn-upload {
+  background: #654279;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-upload i {
+  margin-right: 8px;
+}
+
+.btn-upload:hover {
+  background: linear-gradient(135deg, #654279 0%, #402a4d 100%);
+  transform: translateY(-2px);
+}
+
+/* Image Gallery */
+.gallery-item {
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.gallery-item:hover {
+  transform: translateY(-7px);
 }
 
 .img-thumbnail {
-    width: 300px;
-    height: 200px;
-    object-fit: cover;
-    margin-bottom: 10px;
-    border: 3px solid #343a40;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  margin-bottom: 0;
+  border: none;
+  border-radius: 0;
+  transition: all 0.3s ease;
+  box-shadow: none;
 }
 
-.btn {
-    margin-right: 5px;
+.gallery-item:hover .img-thumbnail {
+  transform: scale(1.05);
 }
 
-.row .cols-sm-4 {
-    margin-bottom: 20px;
-    text-align: center;
+.img-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.7) 100%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.gallery-item:hover .img-overlay {
+  opacity: 1;
+}
+
+.btn-actions {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.gallery-item:hover .btn-actions {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Button Styling */
+.btn-action {
+  border-radius: 6px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 8px 18px;
+  transition: all 0.3s ease;
+  margin: 0 5px;
+  font-size: 14px;
+}
+
+.btn-download {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  color: #654279;
+}
+
+.btn-download:hover {
+  background-color: #654279;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-delete {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  color: #e53e3e;
+}
+
+.btn-delete:hover {
+  background-color: #e53e3e;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Empty State */
+.empty-gallery {
+  text-align: center;
+  padding: 50px 0;
+  color: #8d7196;
+  background-color: white;
+  border-radius: 12px;
+}
+
+.empty-gallery i {
+  font-size: 60px;
+  margin-bottom: 20px;
+  color: #8d7196;
 }
 
 /* Custom modal styling */
 #deleteModal .modal-content {
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+#deleteModal .modal-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 1.5rem;
+}
+
+#deleteModal .modal-title {
+  color: #654279;
+  font-weight: 700;
+}
+
+#deleteModal .modal-body {
+  padding: 2rem 1.5rem;
+  font-size: 1.1rem;
+  color: #664a68;
+}
+
+#deleteModal .modal-footer {
+  border-top: 1px solid #f0f0f0;
+  padding: 1.5rem;
+}
+
+#deleteModal .btn-secondary {
+  background-color: #edf2f7;
+  border: none;
+  color: #654279;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 6px;
+}
+
+#deleteModal .btn-secondary:hover {
+  background-color: #e2e8f0;
+}
+
+#deleteModal .btn-danger {
+  background-color: #e53e3e;
+  border: none;
+  font-weight: 600;
+  padding: 8px 25px;
+  border-radius: 6px;
+}
+
+#deleteModal .btn-danger:hover {
+  background-color: #c53030;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .img-thumbnail {
+      height: 200px;
   }
-  
-  #deleteModal .modal-header {
-    border-bottom: none;
-    padding: 1.5rem;
+ 
+  .btn-actions {
+      bottom: 10px;
   }
-  
-  #deleteModal .modal-footer {
-    border-top: none;
-    padding: 1.5rem;
+ 
+  .upload-container {
+      padding: 20px;
   }
-  
-  #deleteModal .btn-danger {
-    padding: 8px 25px;
+ 
+  .btn-action {
+      padding: 6px 14px;
+      font-size: 13px;
   }
+}
