@@ -15,6 +15,7 @@ mailjet-rest = "*"
 pycryptodome = "*"
 flask-migrate = "*"
 python-dotenv = "*"
+dotenv = "*"
 
 [dev-packages]
 

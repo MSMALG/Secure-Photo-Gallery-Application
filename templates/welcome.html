@@ -1,10 +1,23 @@
 {% extends "base.html" %}
-{% block title %}Welcome{% endblock %}
+{% block title %}Welcome - Secure Photo Gallery{% endblock %}
+
 {% block content %}
-<div class="text-center">
+<div class="welcome-container">
+  <i class="fas fa-images fa-4x mb-4" style="color: #654279;"></i>
   <h1>Welcome to our Secure Photo Gallery!</h1>
-  <p>Start by logging in or creating a new account.</p>
-  <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
-  <a href="{{ url_for('register') }}" class="btn btn-success">Register</a>
+  <p>Store and manage your photos with AES encryption.</p>
+  
+  <div class="mt-5">
+    <a href="{{ url_for('login') }}" class="btn btn-primary">
+      <i class="fas fa-sign-in-alt mr-2"></i> Login
+    </a>
+    <a href="{{ url_for('register') }}" class="btn btn-success">
+      <i class="fas fa-user-plus mr-2"></i> Register
+    </a>
+  </div>
+  
+  <div class="mt-5 pt-4 border-top">
+    <p class="text-muted"><i class="fas fa-lock mr-2"></i> Your photos are protected here</p>
+  </div>
 </div>
 {% endblock %}
