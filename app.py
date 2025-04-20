@@ -235,8 +235,8 @@ def encrypt_file(file_id):
     # Update database
     file.is_encrypted = True
     db.session.commit()
-    
-    flash('File encrypted successfully', 'success')
+
+    #flash('File encrypted successfully', 'success')
     return redirect(url_for('gallery'))
 
 
@@ -278,7 +278,7 @@ def decrypt_file(file_id):
     file.is_encrypted = False
     db.session.commit()
     
-    flash('File decrypted successfully', 'success')
+    #flash('File decrypted successfully', 'success')
     return redirect(url_for('gallery'))
 
 
