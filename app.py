@@ -15,7 +15,7 @@ from Crypto.Cipher import AES       # AES encryption implementation
 from Crypto.Protocol.KDF import PBKDF2  # Secure key derivation
 from Crypto.Util.Padding import pad, unpad  # Handle data padding
 from Crypto.Random import get_random_bytes  # Secure random number gen
-import base64  # Optional: For encoding binary data if needed
+#import base64  # Optional: For encoding binary data if needed
 
 
 app = Flask(__name__)
@@ -89,14 +89,14 @@ def uploaded_file(filename):
     return send_from_directory(user_folder, filename)
     #return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-@app.route('/download/<int:file_id>')
+'''@app.route('/download/<int:file_id>')
 @login_required
 def download(file_id):
     file = File.query.get_or_404(file_id)
     if file.user_id != current_user.id:
         abort(403)
     user_folder = os.path.join(app.config['UPLOAD_FOLDER'], f'user_{file.user_id}')
-    return send_from_directory(user_folder, file.filename, as_attachment=True)
+    return send_from_directory(user_folder, file.filename, as_attachment=True)'''
 
 @app.route('/delete/<int:file_id>')
 @login_required
@@ -114,6 +114,44 @@ def delete(file_id):
     
     db.session.delete(file)
     db.session.commit()
+    return redirect(url_for('gallery'))
+
+@app.route('/delete_encrypted/<int:file_id>', methods=['POST'])
+@login_required
+def delete_encrypted(file_id):
+    file = File.query.get_or_404(file_id)
+    
+    if file.user_id != current_user.id:
+        abort(403)
+    
+    password = request.form.get('password')
+    user_folder = os.path.join(app.config['UPLOAD_FOLDER'], f'user_{current_user.id}')
+    file_path = os.path.join(user_folder, file.filename)
+    
+    try:
+        # Verify password by attempting decryption
+        with open(file_path, 'rb') as f:
+            data = f.read()
+        
+        salt = data[:16]
+        iv = data[16:32]
+        key = PBKDF2(password, salt, dkLen=32, count=100000)
+        
+        # Test decryption with first block
+        cipher = AES.new(key, AES.MODE_CBC, iv)
+        cipher.decrypt(data[32:48])  # Just first 16 bytes of ciphertext
+        
+    except Exception as e:
+        flash('Invalid password for deletion', 'danger')
+        return redirect(url_for('gallery'))
+    
+    # If password verified, proceed with deletion
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    
+    db.session.delete(file)
+    db.session.commit()
+    flash('File deleted successfully', 'success')
     return redirect(url_for('gallery'))
 
 @app.route('/login', methods = ['GET', 'POST'])
@@ -173,7 +211,6 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('welcome'))
-
 
 #ENCRYPTION 
 @app.route('/encrypt/<int:file_id>', methods=['POST'])

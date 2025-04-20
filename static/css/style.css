@@ -471,3 +471,31 @@ body {
     width: 100%;
   }
 }
+
+.image-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.hover-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  display: none;
+  pointer-events: none;
+}
+
+.image-wrapper:hover .hover-icon {
+  display: block;
+}
+
+.viewable-image {
+  transition: 0.3s ease;
+}
+
+.viewable-image:hover {
+  opacity: 0.85;
+}
