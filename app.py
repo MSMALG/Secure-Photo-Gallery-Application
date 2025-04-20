@@ -89,15 +89,6 @@ def uploaded_file(filename):
     return send_from_directory(user_folder, filename)
     #return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-'''@app.route('/download/<int:file_id>')
-@login_required
-def download(file_id):
-    file = File.query.get_or_404(file_id)
-    if file.user_id != current_user.id:
-        abort(403)
-    user_folder = os.path.join(app.config['UPLOAD_FOLDER'], f'user_{file.user_id}')
-    return send_from_directory(user_folder, file.filename, as_attachment=True)'''
-
 @app.route('/delete/<int:file_id>')
 @login_required
 def delete(file_id):
@@ -187,10 +178,6 @@ def register():
             msg = Message("Account Confirmation", recipients=[new_user.email])
             msg.html = f"""<h1>Thank you for joining, {new_user.username}!</h1>
             <p>Click <a href='{url_for('login', _external=True)}'>here</a> to activate your account.</p>"""
-
-           # msg.body = f"""Thank you for joining our app, {new_user.username}!
-           # This is a confirmation email that your account has been created.
-            #You can now login to start uploading your photos."""
 
             try:
                 mail.send(msg)
@@ -296,4 +283,4 @@ def decrypt_file(file_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
