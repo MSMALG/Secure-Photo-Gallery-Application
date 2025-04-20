@@ -499,3 +499,9 @@ body {
 .viewable-image:hover {
   opacity: 0.85;
 }
+.form-groupd label {
+  font-weight: 600;
+  color: #654279;
+  margin-bottom: 12px;  /* Change this to positive value */
+  display: block;
+}

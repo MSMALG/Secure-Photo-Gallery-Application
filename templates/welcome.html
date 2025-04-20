@@ -3,7 +3,13 @@
 
 {% block content %}
 <div class="welcome-container">
-  <i class="fas fa-images fa-4x mb-4" style="color: #654279;"></i>
+  <img
+  src="{{ url_for('static', filename='images/symbol.png') }}"
+  alt="Gallery Symbol"
+  class="d-block mx-auto mb-4"
+  style="width: 18em; height: auto;"
+/>
+
   <h1>Welcome to our Secure Photo Gallery!</h1>
   <p>Store and manage your photos with AES encryption.</p>
   
