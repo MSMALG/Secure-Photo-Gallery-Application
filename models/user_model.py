@@ -53,7 +53,7 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField("Login")'''
 
 class LoginForm(FlaskForm):
-    identifier = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username or Email"})
+    identifier = StringField(validators=[InputRequired(), Length(min=4, max=120)], render_kw={"placeholder": "Username or Email"})
     password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Login")
     
