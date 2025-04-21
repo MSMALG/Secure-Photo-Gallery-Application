@@ -11,11 +11,11 @@ from flask_mail import Mail, Message
 from flask_mail import Message
 from flask_migrate import Migrate
 
-from Crypto.Cipher import AES       # AES encryption implementation
-from Crypto.Protocol.KDF import PBKDF2  # Secure key derivation
-from Crypto.Util.Padding import pad, unpad  # Handle data padding
-from Crypto.Random import get_random_bytes  # Secure random number gen
-#import base64  # Optional: For encoding binary data if needed
+#AES encryption implementation 
+from Crypto.Cipher import AES       
+from Crypto.Protocol.KDF import PBKDF2  #This is or secure key derivation
+from Crypto.Util.Padding import pad, unpad  #Handling data padding
+from Crypto.Random import get_random_bytes  #Secure random number generator 
 
 
 app = Flask(__name__)
@@ -23,9 +23,6 @@ app.config.from_object(Config)
 db.init_app(app)  
 migrate = Migrate(app, db)  
 bcrypt = Bcrypt(app)
-
-'''with app.app_context():
-    db.create_all()'''
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -72,7 +69,7 @@ def uploads():
             file_path = os.path.join(user_folder, filename)
             file.save(file_path)
             
-            #Add to database
+            #Add to database the created user's folder 
             new_file = File(filename=filename, user_id=current_user.id)
             db.session.add(new_file)
             db.session.commit()
@@ -120,7 +117,7 @@ def delete_encrypted(file_id):
     file_path = os.path.join(user_folder, file.filename)
     
     try:
-        # Verify password by attempting decryption
+        #Attempting decryption to verify the password 
         with open(file_path, 'rb') as f:
             data = f.read()
         
@@ -128,15 +125,15 @@ def delete_encrypted(file_id):
         iv = data[16:32]
         key = PBKDF2(password, salt, dkLen=32, count=100000)
         
-        # Test decryption with first block
+        #Test decryption with first block
         cipher = AES.new(key, AES.MODE_CBC, iv)
-        cipher.decrypt(data[32:48])  # Just first 16 bytes of ciphertext
+        cipher.decrypt(data[32:48])  
         
     except Exception as e:
         flash('Invalid password for deletion', 'danger')
         return redirect(url_for('gallery'))
     
-    # If password verified, proceed with deletion
+    #If password is verified, then proceed with deletion
     if os.path.exists(file_path):
         os.remove(file_path)
     
@@ -207,36 +204,36 @@ def encrypt_file(file_id):
     if file.user_id != current_user.id:
         abort(403)
     
-    # Get password from form
+    #Getting password from form
     password = request.form.get('password')
     
-    # File paths
+    #Getting the File path
     user_folder = os.path.join(app.config['UPLOAD_FOLDER'], f'user_{current_user.id}')
     file_path = os.path.join(user_folder, file.filename)
     
-    # Generate random salt (16 bytes) and IV (16 bytes)
+    #Generate random salt (16 bytes) and IV (16 bytes)
     salt = get_random_bytes(16)
     iv = get_random_bytes(16)
     
-    # Key derivation (PBKDF2 with 100,000 iterations)
+    #Key derivation (PBKDF2 with 100,000 iterations)
     key = PBKDF2(password, salt, dkLen=32, count=100000)
     
-    # Read and encrypt file
+    #Read file as binary and encrypt file
     with open(file_path, 'rb') as f:
         plaintext = f.read()
     
     cipher = AES.new(key, AES.MODE_CBC, iv)
     ciphertext = cipher.encrypt(pad(plaintext, AES.block_size))
     
-    # Save salt + iv + ciphertext
+    #Save salt + iv + ciphertext
     with open(file_path, 'wb') as f:
         f.write(salt + iv + ciphertext)
     
-    # Update database
+    # pdate database
     file.is_encrypted = True
     db.session.commit()
 
-    #flash('File encrypted successfully', 'success')
+    flash('File encrypted successfully', 'success')
     return redirect(url_for('gallery'))
 
 
@@ -256,12 +253,12 @@ def decrypt_file(file_id):
     with open(file_path, 'rb') as f:
         data = f.read()
     
-    # Extract components
+    #Extract components used in key derivation 
     salt = data[:16]
     iv = data[16:32]
     ciphertext = data[32:]
     
-    # Re-derive key
+    #Re-derive key
     key = PBKDF2(password, salt, dkLen=32, count=100000)
     
     try:
@@ -271,14 +268,14 @@ def decrypt_file(file_id):
         flash('Decryption failed - wrong password?', 'danger')
         return redirect(url_for('gallery'))
     
-    # Save decrypted file
+    #Save decrypted file by writing on it
     with open(file_path, 'wb') as f:
         f.write(plaintext)
     
     file.is_encrypted = False
     db.session.commit()
     
-    #flash('File decrypted successfully', 'success')
+    flash('File decrypted successfully', 'success')
     return redirect(url_for('gallery'))
 
 
