@@ -1,9 +1,9 @@
-from app import app  # Import your Flask app
-from models.user_model import User  # Import the User model
+#Getting users from database for testing purposes
+from app import app  
+from models.user_model import User  
 
-# Open the app context
 with app.app_context():
-    users = User.query.all()  # Get all users
+    users = User.query.all()  
     if users:
         for user in users:
             print(f"Username: {user.username}, Email: {user.email}")
