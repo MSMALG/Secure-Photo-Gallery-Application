@@ -1,4 +1,4 @@
-#Deleting users from database for testing only
+#Deleting users from database for testing purposes
 import os
 import shutil
 from app import app  #Importing Flask app
