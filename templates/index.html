@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <!-- Gallery Grid with FILENAMES ADDED HERE -->
+    <!-- Gallery Grid  -->
     {% if files|length == 0 %}
     <div class="empty-gallery text-center mt-5">
         <i class="far fa-images fa-5x text-muted"></i>
@@ -53,14 +53,14 @@
         {% for image in files %}
         <div class="col-md-4 mb-4">
             <div class="gallery-item card">
-                <!-- FILENAME DISPLAY ADDED -->
+                <!-- Filename display -->
                 <div class="card-header">
                     <span class="filename" title="{{ image.filename }}">
                         {{ image.filename|truncate(20, true) }}
                     </span>
                 </div>
                 
-                <!-- COVER IMAGE CHANGE HERE -->
+                <!-- Changing image cover if it is encrypted -->
                 {% if image.is_encrypted %}
                 <div class="encryptedCover">
                     <img src="{{ url_for('static', filename='images/encryptedCover.jpeg') }}" 
@@ -79,7 +79,7 @@
                 {% endif %}
                 
                 <div class="card-body text-center">
-                   <!-- In the card-body section, replace the delete buttons with this single button -->
+                   <!-- Delete button for both cases when image is encrypted or decrypted -->
                     <div class="btn-group">
                         {% if image.is_encrypted %}
                         <button type="button" class="btn btn-danger btn-decrypt" 
@@ -120,7 +120,7 @@
                   action="{% if image.is_encrypted %}/decrypt/{{ image.id }}{% else %}/encrypt/{{ image.id }}{% endif %}">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <!-- FILENAME ADDED TO MODAL TITLE -->
+                        <!-- Filename added to modal title -->
                         {% if image.is_encrypted %}Decrypt{% else %}Encrypt{% endif %}
                         <small class="text-muted d-block">{{ image.filename }}</small>
                     </h5>
@@ -130,7 +130,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-groupi">
-                        <!-- PASSWORD LABEL SHOWS FILENAME -->
+                        <!-- Getting password to decrypt -->
                         <label>Password for "{{ image.filename }}":</label>
                         <input type="password" name="password" 
                                class="form-control" required>
@@ -226,9 +226,8 @@
 
 {% block extra_scripts %}
 <script>
-// Update the JavaScript in the extra_scripts block
 $(document).ready(function() {
-    // File input display (existing code)
+    //File input display 
     $('.file-input').change(function() {
         const fileName = $(this).val().split('\\').pop();
         const $container = $(this).closest('.file-input-wrapper');
@@ -242,7 +241,7 @@ $(document).ready(function() {
         }
     });
 
-    // Delete button handling (modified code)
+    //Delete button
     $('.delete-btn').click(function(e) {
         const deleteUrl = $(this).data('delete-url');
         if (deleteUrl) {
@@ -250,7 +249,6 @@ $(document).ready(function() {
             $('#confirmDelete').attr('href', deleteUrl);
             $('#deleteModal').modal('show');
         }
-        // Encrypted files handled automatically by Bootstrap via data-target
     });
 });
 </script>
