@@ -1,14 +1,12 @@
+#Deleting users from database for testing only
 import os
 import shutil
-from app import app  # Import your Flask app
-from models.user_model import User, db  # Import the User model and the db object
+from app import app  #Importing Flask app
+from models.user_model import User, db  #Importing the User model and the db object
 
-# Define the path to the upload folder (this should match your actual config)
-UPLOAD_FOLDER = app.config['UPLOAD_FOLDER']  # Assuming this is where user images are stored
+UPLOAD_FOLDER = app.config['UPLOAD_FOLDER']  
 
-# Open the app context
 with app.app_context():
-    # Query all users to get their IDs and associated folders
     users = User.query.all()
 
     for user in users:
@@ -17,8 +15,7 @@ with app.app_context():
         if os.path.exists(user_folder):
             shutil.rmtree(user_folder)  # Remove the entire folder and its contents
 
-    # Delete all users from the database
     db.session.query(User).delete()
-    db.session.commit()  # Commit the changes to the database
+    db.session.commit()  
 
     print("All users and their files have been deleted.")
