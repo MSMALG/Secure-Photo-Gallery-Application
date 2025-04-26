@@ -10,22 +10,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), nullable=False, unique=True)  
     password = db.Column(db.String(80), nullable = False)
 
-'''class Registration_form(FlaskForm):
-    username = StringField(validators=[InputRequired(), Length(min = 4, max = 20)], render_kw={"placeholder:" "Username"})
-    email = StringField(validators=[InputRequired(), Length(max=120)], render_kw={"placeholder": "Email"})
-    password = PasswordField(validators=[InputRequired(), Length(min = 4, max = 20)], render_kw={"placeholder:" "Password"})
-    submit = SubmitField("Register")
-
-    def validate_username(self, username):
-        existing_user = User.query.filter_by(username=username.data).first()
-        if existing_user:
-            raise ValidationError("Username already exists.")
-
-    def validate_email(self, email):
-        existing_email = User.query.filter_by(email=email.data).first()
-        if existing_email:
-            raise ValidationError("Email already in use.")'''
-
 class RegistrationForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
     email = StringField(validators=[InputRequired(), Length(max=120)], render_kw={"placeholder": "Email"})
@@ -46,11 +30,6 @@ class RegistrationForm(FlaskForm):
         existing_email = User.query.filter_by(email=email.data).first()
         if existing_email:
             raise ValidationError("Email already in use.")
-
-'''class Login_form(FlaskForm):
-    username = StringField(validators=[InputRequired(), Length(min = 4, max = 20)], render_kw={"placeholder:" "Username or Email"})
-    password = PasswordField(validators=[InputRequired(), Length(min = 4, max = 20)], render_kw={"placeholder:" "Password"})
-    submit = SubmitField("Login")'''
 
 class LoginForm(FlaskForm):
     identifier = StringField(validators=[InputRequired(), Length(min=4, max=120)], render_kw={"placeholder": "Username or Email"})
