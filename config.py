@@ -12,7 +12,6 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-insecure-key-for-dev-only')
     UPLOAD_FOLDER = os.path.join('static', 'uploads') #'static/uploads' 
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-    #MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB limit
 
 
     MAIL_SERVER = 'smtp.gmail.com'
